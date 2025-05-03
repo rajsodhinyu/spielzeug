@@ -33,9 +33,13 @@
             border-radius: 5px;
             box-shadow: 0 0 10px rgba(0,0,0,0.2);
             z-index: 1000;
+            max-width: 300px;
         }
         .error {
             color: red;
+        }
+        .success {
+            color: green;
         }
     </style>
 </head>
@@ -46,6 +50,7 @@
     </div>
     <div class="status">
         <div id="connection-status">Status: Connecting...</div>
+        <div id="error-message"></div>
     </div>
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
     <script>
@@ -63,7 +68,7 @@
             fetch('/location')
                 .then(response => {
                     if (!response.ok) {
-                        throw new Error('Network response was not ok');
+                        throw new Error(`HTTP error! status: ${response.status}`);
                     }
                     return response.json();
                 })
@@ -75,13 +80,18 @@
                         document.getElementById('last-update').textContent = 
                             `Last update: ${new Date(timestamp).toLocaleString()}`;
                         document.getElementById('connection-status').textContent = 'Status: Connected';
+                        document.getElementById('connection-status').className = 'success';
+                        document.getElementById('error-message').textContent = '';
+                    } else {
+                        document.getElementById('connection-status').textContent = 'Status: No location data yet';
                         document.getElementById('connection-status').className = '';
                     }
                 })
                 .catch(error => {
                     console.error('Error fetching location:', error);
-                    document.getElementById('connection-status').textContent = 'Status: Error - ' + error.message;
+                    document.getElementById('connection-status').textContent = 'Status: Error';
                     document.getElementById('connection-status').className = 'error';
+                    document.getElementById('error-message').textContent = error.message;
                 });
         }
 

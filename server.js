@@ -14,6 +14,12 @@ app.use(cors());
 app.use(bodyParser.json());
 app.use(express.static('public'));
 
+// Log all requests
+app.use((req, res, next) => {
+    console.log(`${new Date().toISOString()} - ${req.method} ${req.url}`);
+    next();
+});
+
 // Endpoint to receive location updates from OwnTracks
 app.post('/location', (req, res) => {
     console.log('Received location update:', JSON.stringify(req.body, null, 2));
@@ -51,14 +57,23 @@ app.get('/location', (req, res) => {
 
 // Serve the main page
 app.get('/', (req, res) => {
+    console.log('Serving main page');
     res.sendFile(path.join(__dirname, 'public', 'index.html'));
 });
 
 // Add a test endpoint
 app.get('/test', (req, res) => {
+    console.log('Test endpoint hit');
     res.send('Server is running!');
+});
+
+// Error handling middleware
+app.use((err, req, res, next) => {
+    console.error('Error:', err);
+    res.status(500).send('Something broke!');
 });
 
 app.listen(port, () => {
     console.log(`Server running on port ${port}`);
+    console.log(`Environment: ${process.env.NODE_ENV || 'development'}`);
 }); 
