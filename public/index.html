@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Location Tracker</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+        }
+        #map {
+            width: 100vw;
+            height: 100vh;
+        }
+        .info {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            padding: 10px;
+            background: white;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.2);
+            z-index: 1000;
+        }
+    </style>
+</head>
+<body>
+    <div id="map"></div>
+    <div class="info">
+        <div id="last-update">Last update: Never</div>
+    </div>
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script>
+        // Initialize the map
+        const map = L.map('map').setView([0, 0], 2);
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '© OpenStreetMap contributors'
+        }).addTo(map);
+
+        // Create a marker
+        const marker = L.marker([0, 0]).addTo(map);
+        
+        // Function to update the location
+        function updateLocation() {
+            fetch('/location')
+                .then(response => response.json())
+                .then(data => {
+                    if (data) {
+                        const { lat, lon, timestamp } = data;
+                        marker.setLatLng([lat, lon]);
+                        map.setView([lat, lon], 15);
+                        document.getElementById('last-update').textContent = 
+                            `Last update: ${new Date(timestamp).toLocaleString()}`;
+                    }
+                })
+                .catch(error => console.error('Error fetching location:', error));
+        }
+
+        // Update location every 5 seconds
+        updateLocation();
+        setInterval(updateLocation, 5000);
+    </script>
+</body>
+</html> 
