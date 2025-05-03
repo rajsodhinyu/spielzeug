@@ -28,15 +28,24 @@ app.post('/location', (req, res) => {
         };
         console.log('Location updated:', latestLocation);
         res.status(200).send('OK');
+    } else if (location.lat && location.lon) {
+        // Fallback for different format
+        latestLocation = {
+            lat: location.lat,
+            lon: location.lon,
+            timestamp: new Date().toISOString()
+        };
+        console.log('Location updated (fallback format):', latestLocation);
+        res.status(200).send('OK');
     } else {
-        console.log('Invalid location data received');
+        console.log('Invalid location data received:', JSON.stringify(location));
         res.status(400).send('Invalid location data');
     }
 });
 
 // Endpoint to get the latest location
 app.get('/location', (req, res) => {
-    console.log('Location requested');
+    console.log('Location requested, current location:', latestLocation);
     res.json(latestLocation);
 });
 
@@ -51,5 +60,5 @@ app.get('/test', (req, res) => {
 });
 
 app.listen(port, () => {
-    console.log(`Server running at http://localhost:${port}`);
+    console.log(`Server running on port ${port}`);
 }); 
