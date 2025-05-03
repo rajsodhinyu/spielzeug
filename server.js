@@ -16,26 +16,38 @@ app.use(express.static('public'));
 
 // Endpoint to receive location updates from OwnTracks
 app.post('/location', (req, res) => {
+    console.log('Received location update:', JSON.stringify(req.body, null, 2));
+    
+    // OwnTracks sends data in a specific format
     const location = req.body;
-    if (location.lat && location.lon) {
+    if (location._type === 'location' && location.lat && location.lon) {
         latestLocation = {
             lat: location.lat,
             lon: location.lon,
             timestamp: new Date().toISOString()
         };
         console.log('Location updated:', latestLocation);
+        res.status(200).send('OK');
+    } else {
+        console.log('Invalid location data received');
+        res.status(400).send('Invalid location data');
     }
-    res.status(200).send('OK');
 });
 
 // Endpoint to get the latest location
 app.get('/location', (req, res) => {
+    console.log('Location requested');
     res.json(latestLocation);
 });
 
 // Serve the main page
 app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname, 'public', 'index.html'));
+});
+
+// Add a test endpoint
+app.get('/test', (req, res) => {
+    res.send('Server is running!');
 });
 
 app.listen(port, () => {

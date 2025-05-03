@@ -24,12 +24,28 @@
             box-shadow: 0 0 10px rgba(0,0,0,0.2);
             z-index: 1000;
         }
+        .status {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            padding: 10px;
+            background: white;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.2);
+            z-index: 1000;
+        }
+        .error {
+            color: red;
+        }
     </style>
 </head>
 <body>
     <div id="map"></div>
     <div class="info">
         <div id="last-update">Last update: Never</div>
+    </div>
+    <div class="status">
+        <div id="connection-status">Status: Connecting...</div>
     </div>
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
     <script>
@@ -45,7 +61,12 @@
         // Function to update the location
         function updateLocation() {
             fetch('/location')
-                .then(response => response.json())
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok');
+                    }
+                    return response.json();
+                })
                 .then(data => {
                     if (data) {
                         const { lat, lon, timestamp } = data;
@@ -53,9 +74,15 @@
                         map.setView([lat, lon], 15);
                         document.getElementById('last-update').textContent = 
                             `Last update: ${new Date(timestamp).toLocaleString()}`;
+                        document.getElementById('connection-status').textContent = 'Status: Connected';
+                        document.getElementById('connection-status').className = '';
                     }
                 })
-                .catch(error => console.error('Error fetching location:', error));
+                .catch(error => {
+                    console.error('Error fetching location:', error);
+                    document.getElementById('connection-status').textContent = 'Status: Error - ' + error.message;
+                    document.getElementById('connection-status').className = 'error';
+                });
         }
 
         // Update location every 5 seconds
