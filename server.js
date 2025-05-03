@@ -24,24 +24,18 @@ app.use((req, res, next) => {
 app.post('/location', (req, res) => {
     console.log('Received location update:', JSON.stringify(req.body, null, 2));
     
-    // OwnTracks sends data in a specific format
+    // Handle OwnTracks payload format
     const location = req.body;
     if (location._type === 'location' && location.lat && location.lon) {
         latestLocation = {
             lat: location.lat,
             lon: location.lon,
-            timestamp: new Date().toISOString()
+            timestamp: new Date(location.tst * 1000).toISOString(), // Convert Unix timestamp to ISO
+            accuracy: location.acc,
+            battery: location.batt,
+            altitude: location.alt
         };
         console.log('Location updated:', latestLocation);
-        res.status(200).send('OK');
-    } else if (location.lat && location.lon) {
-        // Fallback for different format
-        latestLocation = {
-            lat: location.lat,
-            lon: location.lon,
-            timestamp: new Date().toISOString()
-        };
-        console.log('Location updated (fallback format):', latestLocation);
         res.status(200).send('OK');
     } else {
         console.log('Invalid location data received:', JSON.stringify(location));
