@@ -67,7 +67,19 @@ app.use((err, req, res, next) => {
     res.status(500).send('Something broke!');
 });
 
-app.listen(port, () => {
+// Start the server
+const server = app.listen(port, () => {
     console.log(`Server running on port ${port}`);
     console.log(`Environment: ${process.env.NODE_ENV || 'development'}`);
+});
+
+// Handle server errors
+server.on('error', (error) => {
+    if (error.code === 'EADDRINUSE') {
+        console.error(`Port ${port} is already in use. Trying port ${port + 1}`);
+        server.close();
+        app.listen(port + 1);
+    } else {
+        console.error('Server error:', error);
+    }
 }); 
