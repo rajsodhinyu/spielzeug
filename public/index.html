@@ -82,7 +82,7 @@
             right: 10px;
             color: #FFFFFF;
             font-family: 'Caveat', cursive;
-            font-size: 1.2em;
+            font-size: 1em;
             background-image: url('/FRAME.png');
             background-size: 100% 100%;
             background-repeat: no-repeat;
@@ -152,7 +152,7 @@
                         marker.setLatLng([lat, lon]);
                         map.setView([lat, lon], 15);
                         document.getElementById('last-update').textContent = 
-                            `Last update: ${new Date(timestamp).toLocaleString()}`;
+                            `${new Date(timestamp).toLocaleString()}`;
                         document.getElementById('location-details').innerHTML = `
                             <div>Accuracy: ${accuracy}m</div>
                             <div>Battery: ${battery}%</div>
