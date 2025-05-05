@@ -5,12 +5,13 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@500&display=swap" rel="stylesheet">
     <style>
         body {
             margin: 0;
             padding: 0;
             overflow: hidden;
-            background: #f0f0f0;
+            background: #efb2d1;
             min-height: 100vh;
             display: flex;
             justify-content: center;
@@ -71,29 +72,28 @@
             height: 100%;
             object-fit: contain;
         }
-        .info, .status {
+        .info {
             position: fixed;
-            padding: 10px;
-            background: white;
-            border-radius: 5px;
-            box-shadow: 0 0 10px rgba(0,0,0,0.2);
+            padding: 20px;
             z-index: 1000;
             max-width: 300px;
             pointer-events: auto;
-        }
-        .info {
             top: 10px;
             right: 10px;
-        }
-        .status {
-            top: 10px;
-            left: 10px;
-        }
-        .error {
-            color: red;
-        }
-        .success {
-            color: green;
+            color: #FFFFFF;
+            font-family: 'Caveat', cursive;
+            font-size: 1.2em;
+            background-image: url('/frame.png');
+            background-size: 100% 100%;
+            background-repeat: no-repeat;
+            background-position: center;
+            min-width: 200px;
+            min-height: 150px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
         }
         .location-details {
             margin-top: 10px;
@@ -104,6 +104,11 @@
         @media (min-width: 768px) {
             .layout-container {
                 max-width: 600px;
+            }
+            .info {
+                font-size: 1.4em;
+                min-width: 250px;
+                min-height: 200px;
             }
         }
     </style>
@@ -120,10 +125,6 @@
     <div class="info">
         <div id="last-update">Last update: Never</div>
         <div id="location-details" class="location-details"></div>
-    </div>
-    <div class="status">
-        <div id="connection-status">Status: Connecting...</div>
-        <div id="error-message"></div>
     </div>
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
     <script>
@@ -157,19 +158,10 @@
                             <div>Battery: ${battery}%</div>
                             <div>Altitude: ${altitude}m</div>
                         `;
-                        document.getElementById('connection-status').textContent = 'Status: Connected';
-                        document.getElementById('connection-status').className = 'success';
-                        document.getElementById('error-message').textContent = '';
-                    } else {
-                        document.getElementById('connection-status').textContent = 'Status: No location data yet';
-                        document.getElementById('connection-status').className = '';
                     }
                 })
                 .catch(error => {
                     console.error('Error fetching location:', error);
-                    document.getElementById('connection-status').textContent = 'Status: Error';
-                    document.getElementById('connection-status').className = 'error';
-                    document.getElementById('error-message').textContent = error.message;
                 });
         }
 
