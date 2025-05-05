@@ -25,7 +25,8 @@
         }
         .map-container {
             position: absolute;
-            top: 60%;
+            
+            top: 75%;
             left: 50%;
             transform: translate(-50%, -50%);
             width: 55%;
@@ -57,7 +58,7 @@
         }
         .phone-container {
             position: absolute;
-            top: 15%;
+            top: 30%;
             left: 0;
             width: 100%;
             height: 100%;
@@ -77,14 +78,14 @@
             padding: 2vh;
             z-index: 1000;
             width: 30vh;
-            height: 20vh;
-            top: 2vh;
+            height: 9.4vh; /* Adjusted for TITLE.png aspect ratio (1045/327) */
+            top: 1vh;
             left: 50%;
             transform: translateX(-50%);
             color: #FFFFFF;
             font-family: 'Caveat', cursive;
             font-size: 2vh;
-            background-image: url('/FRAME.png');
+            background-image: url('/TITLE.png');
             background-size: 100% 100%;
             background-repeat: no-repeat;
             background-position: center;
@@ -101,7 +102,7 @@
 
         .extra-images {
             position: fixed;
-            top: 27vh; /* info.top (2vh) + info.height (20vh) + info.padding (2*2vh) + gap (1vh) */
+            top: 16.5vh; /* Adjusted: info.top(2) + info.height(9.4) + info.padding(4) + gap(1) */
             left: 50%;
             transform: translateX(-50%);
             width: 30vh; /* Match info width */
@@ -109,6 +110,7 @@
             display: flex;
             flex-direction: row;
             justify-content: space-around;
+            margin-bottom: 1vh;
             align-items: center;
         }
 
@@ -124,14 +126,14 @@
             }
             .info {
                 width: 35vh;
-                height: 22vh;
+                height: 11vh; /* Adjusted for TITLE.png aspect ratio */
                 font-size: 2.2vh;
             }
             .location-details {
                 font-size: 2vh;
             }
             .extra-images {
-                top: 29vh; /* Adjusted for desktop info height/padding */
+                top: 18vh; /* Adjusted: info.top(2) + info.height(11) + info.padding(4) + gap(1) */
                 width: 35vh; /* Match desktop info width */
             }
         }
@@ -147,7 +149,7 @@
         </div>
     </div>
     <div class="info">
-        <div id="last-update">Last update: Never</div>
+        <div id="last-update"></div>
         <div id="location-details" class="location-details"></div>
     </div>
     <div class="extra-images">
@@ -181,7 +183,7 @@
                         map.setView([lat, lon], 15);
                         document.getElementById('last-update').textContent = 
                             `${new Date(timestamp).toLocaleString()}`;
-                        document.getElementById('location-details').innerHTML = `
+                        document.getElementById('').innerHTML = `
                             <div>Accuracy: ${accuracy}m</div>
                             <div>Battery: ${battery}%</div>
                             <div>Altitude: ${altitude}m</div>
