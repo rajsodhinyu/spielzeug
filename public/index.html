@@ -57,7 +57,7 @@
         }
         .phone-container {
             position: absolute;
-            top: 10%;
+            top: 15%;
             left: 0;
             width: 100%;
             height: 100%;
@@ -99,6 +99,24 @@
             font-size: 1.8vh;
         }
 
+        .extra-images {
+            position: fixed;
+            top: 27vh; /* info.top (2vh) + info.height (20vh) + info.padding (2*2vh) + gap (1vh) */
+            left: 50%;
+            transform: translateX(-50%);
+            width: 30vh; /* Match info width */
+            z-index: 999; /* Slightly below info */
+            display: flex;
+            flex-direction: row;
+            justify-content: space-around;
+            align-items: center;
+        }
+
+        .extra-images img {
+            max-width: 100%;
+            height: auto;
+        }
+
         /* Desktop styles */
         @media (min-width: 768px) {
             .layout-container {
@@ -111,6 +129,10 @@
             }
             .location-details {
                 font-size: 2vh;
+            }
+            .extra-images {
+                top: 29vh; /* Adjusted for desktop info height/padding */
+                width: 35vh; /* Match desktop info width */
             }
         }
     </style>
@@ -127,6 +149,10 @@
     <div class="info">
         <div id="last-update">Last update: Never</div>
         <div id="location-details" class="location-details"></div>
+    </div>
+    <div class="extra-images">
+        <a href="https://drive.google.com/file/d/197Rku2hrg2a6w7sY_OXf34AbnmNay00o/view?usp=sharing"><img src="CHECKLIST.png" alt="Checklist"></a>
+        <a href="https://www.spielzeug.gallery/whowantstobeparishiltonsbestfriend-1"><img src="EXHIBITION-TEXT.png" alt="Exhibition Text"></a>
     </div>
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
     <script>
