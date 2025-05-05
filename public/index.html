@@ -74,21 +74,20 @@
         }
         .info {
             position: fixed;
-            padding: 20px;
+            padding: 2vh;
             z-index: 1000;
-            max-width: 300px;
-            pointer-events: auto;
-            top: 10px;
-            right: 10px;
+            width: 30vh;
+            height: 20vh;
+            top: 2vh;
+            left: 50%;
+            transform: translateX(-50%);
             color: #FFFFFF;
             font-family: 'Caveat', cursive;
-            font-size: 1em;
+            font-size: 2vh;
             background-image: url('/FRAME.png');
             background-size: 100% 100%;
             background-repeat: no-repeat;
             background-position: center;
-            min-width: 200px;
-            min-height: 150px;
             display: flex;
             flex-direction: column;
             justify-content: center;
@@ -96,8 +95,8 @@
             text-align: center;
         }
         .location-details {
-            margin-top: 10px;
-            font-size: 0.9em;
+            margin-top: 1vh;
+            font-size: 1.8vh;
         }
 
         /* Desktop styles */
@@ -106,9 +105,12 @@
                 max-width: 600px;
             }
             .info {
-                font-size: 1.4em;
-                min-width: 250px;
-                min-height: 200px;
+                width: 35vh;
+                height: 22vh;
+                font-size: 2.2vh;
+            }
+            .location-details {
+                font-size: 2vh;
             }
         }
     </style>
