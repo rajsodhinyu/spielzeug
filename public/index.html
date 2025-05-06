@@ -167,6 +167,10 @@
         // Create a marker
         const marker = L.marker([0, 0]).addTo(map);
         
+        // Add static marker for specific location
+        const staticMarker = L.marker([40.750874514271324, -74.00487178837427]).addTo(map);
+        staticMarker.bindPopup("NADA").openPopup();
+        
         // Function to update the location
         function updateLocation() {
             fetch('/location')
