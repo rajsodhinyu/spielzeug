@@ -168,8 +168,11 @@
         const marker = L.marker([0, 0]).addTo(map);
         
         // Add static marker for specific location
-        const staticMarker = L.marker([40.750874514271324, -74.00487178837427]).addTo(map);
-        staticMarker.bindPopup("NADA").openPopup();
+        const nadaStatic = L.marker([40.750874514271324, -74.00487178837427]).addTo(map);
+        nadaStatic.bindPopup("NADA").openPopup();
+        const Static2 = L.marker([40.7211736, -74.00645944444445]).addTo(map);
+        Static2.bindPopup("Independent").openPopup();
+        
         
         // Function to update the location
         function updateLocation() {
