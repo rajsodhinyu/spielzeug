@@ -188,7 +188,7 @@
                         const { lat, lon, timestamp, accuracy, battery, altitude } = data;
                         marker.setLatLng([lat, lon]);
                         map.setView([lat, lon], 15);
-                        document.getElementById('last-update').textContent = 
+                        document.getElementById('').textContent = 
                             `${new Date(timestamp).toLocaleString()}`;
                         document.getElementById('').innerHTML = `
                             <div>Accuracy: ${accuracy}m</div>
